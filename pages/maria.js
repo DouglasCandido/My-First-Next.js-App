@@ -6,13 +6,17 @@ const Maria = () => (
 
     <div>
 
-        {/* <title> Página Maria Preá </title>
+        {/* 
+        
+        <title> Página Maria Preá </title>
 
         <h1>Essa é a página Maria Preá</h1>
 
         <Link href="/">
             <a>Voltar para a Página Inicial</a>
-        </Link> */}
+        </Link> 
+        
+        */}
 
         <MariaPrea adjetivo={"formosa"}/>
 

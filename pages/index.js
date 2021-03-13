@@ -11,7 +11,15 @@ const Index = () => (
       <h2>Página Inicial do meu primeiro app utilizando Next.js</h2>
 
       <Link href="/maria">
-          <a>Ir para a página Maria</a>
+        <a>Ir para a página Maria</a>
+      </Link>
+
+      <br />
+
+      <br />
+
+      <Link href="/movies">
+        <a>Ir para a página Cinema</a>
       </Link>
 
     </div>
