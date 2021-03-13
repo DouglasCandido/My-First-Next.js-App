@@ -1,69 +1,97 @@
 import Link from 'next/link'
+import axios from 'axios';
 
-export async function getServerSideProps() {
+const retrievedData = async () => await axios.get(`http://www.omdbapi.com/?apikey=c9cd551f&s=pirates&plot=long`)
+  .then(res => ({
+    error: false,
+    movies: res.data,
+  }))
+  .catch(() => ({
+      error: true,
+      movies: null,
+    }),
+  );
 
-    const URI = `http://www.omdbapi.com/?apikey=c9cd551f&t=fight_club&plot=long`
+export const getServerSideProps = async() => {
 
-    const encodedURI = encodeURI(URI);
-
-    const res = await fetch(encodedURI)
-
-    const data = await res.json()
+    const data = await retrievedData();
   
-    return { 
+    return {
 
-        props: { data } 
-        
-    }
+      props: data,
+
+    };
 
 }
 
-const Movies = ({ data }) => (
+const Movies = ({ movies, error }) => {
 
-    <div>
+    if(error) return <div>Filme não existente</div>
 
-        <title> Cinema </title>
+    return (
 
-        <center>
+        <div>
 
-            <h1>Filmes em cartaz</h1>
+            <div>
 
-        </center>
+                <Link href="/movies">
+                    <a>Ir para a página Cinema</a>
+                </Link>
 
-        <h2>Boa diversão! O seguinte filme está em cartaz:</h2>
+                <title> Cinema </title>
 
-        <div className="filmes">
+                <center>
 
-            <ul>
+                    <h1>Filmes em cartaz</h1>
 
-                <li>
+                </center>
 
-                    <p className="titulo">Título: { data["Title"] }</p>
+                <center>
 
-                    <p className="ano">Ano: { data["Released"] }</p>
+                    <h2>Boa diversão! Os seguintes filmes estão em cartaz:</h2>
 
-                    <p className="genero">Gêneros: { data["Genre"] } </p>
+                </center>
 
-                    <p className="enredo">Enredo: { data["Plot"] } </p>
+            </div>
 
-                    <center>
+            { 
+        
+            movies.Search.map((m) => 
 
-                        <img src="https://images-na.ssl-images-amazon.com/images/I/713OBFnCXjL._AC_SL1414_.jpg" alt="poster" className="poster" width="300rem" height="300rem" style={{display: "block"}}></img>
+            <div>
+
+                <center>
+                
+                    <strong> 
+                        
+                        {m.Title} 
+                        
+                    </strong> 
+                    
+                    <br />
+                    
+                    <img src={m.Poster} alt="A visualização do poster não está disponível para este filme."></img> 
+                    
+                    <br />
+
+                    Ano de lançamento: {m.Year}
+                
+                </center>
+
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                <br />
+
+            </div> 
             
-                    </center>
-
-                </li>
-
-            </ul>
-
+            )
+        
+            }
+    
         </div>
 
-        <Link href="/">
-            <a>Voltar para a Página Inicial</a>
-        </Link>
+    );
 
-    </div>
+};
 
-  )
-  
-  export default Movies
+export default Movies

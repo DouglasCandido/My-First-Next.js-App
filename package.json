@@ -8,6 +8,7 @@
     "are-we-there-yet": "^1.1.5",
     "asn1.js": "^5.4.1",
     "assert": "^1.5.0",
+    "axios": "^0.21.1",
     "bl": "^4.1.0",
     "braces": "^3.0.2",
     "browserify-aes": "^1.2.0",
