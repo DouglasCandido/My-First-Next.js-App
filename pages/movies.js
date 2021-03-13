@@ -34,8 +34,8 @@ const Movies = ({ movies, error }) => {
 
             <div>
 
-                <Link href="/movies">
-                    <a>Ir para a página Cinema</a>
+                <Link href="/">
+                    <a>Ir para a página Inicial</a>
                 </Link>
 
                 <title> Cinema </title>

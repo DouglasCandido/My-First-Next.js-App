@@ -11,7 +11,7 @@ const MariaPrea = ({adjetivo}) => (
       <p>Maria Preá é {adjetivo}</p>
 
       <Link href="/">
-        <a>Voltar para a Página Inicial</a>
+        <a>Voltar para a página Inicial</a>
       </Link>
 
     </div>
