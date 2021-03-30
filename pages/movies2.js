@@ -2,26 +2,15 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import React, { useState } from 'react';
 
-const fetcher = async (url) => {
-
-    const fetched = await fetch(url);
-
-    const res = await fetched.json();
-
-    return res;
-
-}
-
 const Movies2 = () => {
 
-    const [search, setSearch] = useState("Batman");
+    const [contador, setContador] = useState(1)
 
-    const { data, error } = useSWR(`http://www.omdbapi.com/?apikey=c9cd551f&s=${search}&plot=long`, fetcher);
+    const [search, setSearch] = useState("");
 
+    const { data } = useSWR(`http://www.omdbapi.com/?apikey=c9cd551f&s=${search}&plot=long&page=${contador}`, fetcher);
 
-    if(error) return <div> Filme não existente </div>
-
-    else if (!data) return <div> Carregando ... </div>
+    console.log(data);
 
     return (
 
@@ -39,9 +28,9 @@ const Movies2 = () => {
 
                     <center>
 
-                        <p>Pesquise por um filme no campo de texto abaixo, clique dentro do campo de texto abaixo e digite o nome do filme a ser pesquisado no campo de texto abaixo, irá pesquisar automaticamente após tirar o mouse de cima do campo de texto.</p>
+                        <h3>Pesquise por um filme no campo de texto abaixo, clique dentro do campo de texto abaixo e digite o nome do filme a ser pesquisado.</h3>
 
-                        <input type="text" placeholder="Digite o nome do filme" name="input_search" onMouseLeave={e => setSearch(e.target.value)}></input>
+                        <input type="search" placeholder="Digite o nome do filme" name="input_search" onChange={e => setSearch(e.target.value)} />
 
                     </center>
 
@@ -61,39 +50,66 @@ const Movies2 = () => {
 
             </div>
 
-            { 
-        
-                data.Search.map((m) => 
+            <center>
 
-                <div>
+                {contador > 1 ? <button onClick={() => setContador(contador - 1)}>Página anterior</button> : null }
 
-                    <center>
+                <button onClick={() => setContador(contador + 1)}>Página seguinte</button>
+
+                <p> Página atual: {contador} </p>
+
+            </center>
+
+            <ul>
+
+                { 
+
+                    data && 
+
+                    (data.Search) ? 
                     
-                        <strong> 
-                            
-                            {m.Title} 
-                            
-                        </strong> 
-                        
-                        <br />
-                        
-                        <img src={m.Poster} alt="A visualização do poster não está disponível para este filme."></img> 
-                        
-                        <br />
+                        data.Search.map((m) => 
 
-                        Ano de lançamento: {m.Year}
+                            <li key={m.Title}>
+
+                                <div>
+
+                                    <center>
+                                    
+                                        <strong> 
+                                            
+                                            {m.Title} 
+                                            
+                                        </strong> 
+                                        
+                                        <br />
+                                        
+                                        <img src={m.Poster} alt="A visualização do poster não está disponível para este filme."></img> 
+                                        
+                                        <br />
+
+                                        Ano de lançamento: {m.Year}
+                                    
+                                    </center>
+
+                                    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                    <br />
+
+                                </div> 
+
+                            </li> 
+                        
+                        )
                     
-                    </center>
 
-                    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    :
+                    
+                    <center><div><h2>Filme não existente.</h2></div></center>
+            
+                }
 
-                    <br />
-
-                </div> 
-                
-                )
-        
-            }
+            </ul>
    
         </div>
 
@@ -101,5 +117,17 @@ const Movies2 = () => {
 
 };
 
+const fetcher = async (url) => {
+
+    const fetched = await fetch(url);
+
+    const res = await fetched.json();
+
+    return res;
+
+}
+
 export default Movies2
+
+
 
