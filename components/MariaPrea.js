@@ -19,3 +19,5 @@ const MariaPrea = ({adjetivo}) => (
   )
   
   export default MariaPrea
+
+  

@@ -16,14 +16,25 @@ const Index = () => (
 
       <br />
 
-      <br />
-
       <Link href="/movies">
         <a>Ir para a página Cinema</a>
       </Link>
 
+      <br />
+
+      <Link href="/movies2">
+        <a>Ir para a página Cinema com a funcionalidade de pesquisa</a>  
+      </Link>
+
+      <br />
+
     </div>
 
-  )
+  );
   
   export default Index
+
+  
+  
+
+  

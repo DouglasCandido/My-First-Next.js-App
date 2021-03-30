@@ -95,3 +95,5 @@ const Movies = ({ movies, error }) => {
 };
 
 export default Movies
+
+
